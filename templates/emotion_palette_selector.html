@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Color Palette Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #000;
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+        }
+
+        .menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 20;
+            width: 250px;
+        }
+
+        .menu:hover + .menu-content,
+        .menu-content:hover {
+            display: block;
+        }
+
+        .menu-content a {
+            display: block;
+            padding: 10px 40px;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu-content a:hover {
+            background-color: whitesmoke;
+        }
+
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            position: absolute; /* Position the logo */
+            top: 10px; /* Space from the top */
+            left: 20px; /* Space from the left */
+            font-size: 24px; /* Logo text size */
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .emotion-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 100px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, border 0.3s;
+            font-size: 16px;
+            text-align: center;
+            color: white;
+            border: none;
+        }
+
+        .emotion-box.selected {
+            border: 2px solid #007BFF;
+        }
+
+        .emotion-box:hover {
+            transform: scale(1.1);
+        }
+
+        .generate-button, .download-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            color: black;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+        }
+
+        #emotion-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+
+         <!-- display the logo - minh -->
+         <div class="logo" onclick="location.href='./landing.html'">
+            <img src="/static/logo.png" alt="AdaptiveStudio Logo" style="height: 50px; cursor: pointer;">
+        </div>
+        
+        <div class="menu" id="menu">☰</div>
+        <div class="menu-content" id="menuContent">
+            <a href="/accessibility">Real Time Accessibility Checker</a>
+            <a href="/design_element_suggestions">Design Element Suggestions</a>
+            <a href="/educational_resources">Educational Resources</a>
+            <a href="/accessibility_mode_toggle">Accessibility Mode Toggle</a>
+            <a href="/my_profile">My Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Emotion Color Palette Generator</h1>
+        <div id="emotion-container">
+            <div class="emotion-box" style="background-color: #FFFF00;" onclick="selectEmotion('happiness')">Happiness</div>
+            <div class="emotion-box" style="background-color: #00FF00;" onclick="selectEmotion('calm')">Calm</div>
+            <div class="emotion-box" style="background-color: #0000FF;" onclick="selectEmotion('sadness')">Sadness</div>
+            <div class="emotion-box" style="background-color: #FF0000;" onclick="selectEmotion('anger')">Anger</div>
+            <div class="emotion-box" style="background-color: #800080;" onclick="selectEmotion('fear')">Fear</div>
+            <div class="emotion-box" style="background-color: #FF33F6;" onclick="generateRandomPalette()">Surprise Me!</div>
+        </div>
+        <button class="generate-button" id="generate-button" onclick="generatePalettes()">Generate Palette</button>
+        <div class="palette-container" id="palette-container"></div>
+        <button class="download-button" id="download-button" onclick="downloadPalette()" style="display: none;">Download Palette</button>
+    </div>
+
+    <script>
+        let selectedEmotion = null;
+        let palettes = [];
+
+        function selectEmotion(emotion) {
+            document.querySelectorAll('.emotion-box').forEach(box => {
+                box.classList.remove('selected');
+            });
+
+            if (selectedEmotion === emotion) {
+                selectedEmotion = null;
+            } else {
+                selectedEmotion = emotion;
+                event.currentTarget.classList.add('selected');
+            }
+        }
+
+        function generateRandomPalette() {
+            const randomColors = Array.from({ length: 5 }, () => `#${Math.floor(Math.random() * 16777215).toString(16)}`);
+            palettes = [{ colors: randomColors }];
+            displayPalettes();
+            document.getElementById('download-button').style.display = 'block';
+        }
+
+        function generatePalettes() {
+            if (!selectedEmotion) {
+                alert('Please select an emotion!');
+                return;
+            }
+            fetch(`/generate_palette/${selectedEmotion}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.palettes) {
+                        palettes = data.palettes;
+                        displayPalettes();
+                        document.getElementById('download-button').style.display = 'block';
+                    } else {
+                        alert(data.error || 'Error generating palettes');
+                    }
+                });
+        }
+
+        function displayPalettes() {
+            const container = document.getElementById('palette-container');
+            container.innerHTML = '';
+            palettes.forEach((palette, index) => {
+                const paletteDiv = document.createElement('div');
+                paletteDiv.innerText = `Palette ${index + 1}:`;
+                palette.colors.forEach(color => {
+                    const colorBox = document.createElement('div');
+                    colorBox.style.backgroundColor = color;
+                    colorBox.style.width = '50px';
+                    colorBox.style.height = '50px';
+                    colorBox.style.display = 'inline-block';
+                    paletteDiv.appendChild(colorBox);
+                });
+                container.appendChild(paletteDiv);
+            });
+        }
+
+        function downloadPalette() {
+            fetch('/download_palette', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ palettes })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'palette.json';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => console.error('Error downloading palette:', error));
+        }
+
+        const menu = document.getElementById('menu');
+        const menuContent = document.getElementById('menuContent');
+
+        menu.addEventListener('click', () => {
+            menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target) && !menuContent.contains(event.target)) {
+                menuContent.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Resources</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url('path/to/your/background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px; /* Increased max width for better spacing */
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .resource {
+            background: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0; /* Adjusted margin for spacing */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .resource h3 {
+            margin: 0 0 10px;
+            text-align: center; /* Center align titles */
+            text-decoration: none;
+        }
+        .resource img, .resource video {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .resources-row {
+            display: flex;
+            flex-direction: column; /* Changed to column for one resource per row */
+            align-items: center; /* Center align resources */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .logo {
+            position: absolute; /* Position the logo */
+            top: 10px; /* Space from the top */
+            left: 20px; /* Space from the left */
+            font-size: 24px; /* Logo text size */
+            cursor: pointer;
+        }
+        .title {
+            font-size: 24px;
+            color: black;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+        }
+        .menu {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+        }
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+            width: 250px;
+        }
+        .menu:hover + .menu-content,
+        .menu-content:hover {
+            display: block;
+        }
+        .menu-content a {
+            display: block;
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-content a:hover {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+
+         <!-- display the logo - minh -->
+         <div class="logo" onclick="location.href='./landing.html'">
+            <img src="/static/logo.png" alt="AdaptiveStudio Logo" style="height: 50px; cursor: pointer;">
+        </div>
+        
+        <div class="menu" id="menu">☰</div>
+        <div class="menu-content" id="menuContent">
+            <a href="/accessibility">Real Time Accessibility Checker</a>
+            <a href="/design_element_suggestions">Design Element Suggestions</a>
+            <a href="/accessibility_mode_toggle">Accessibility Mode Toggle</a>
+            <a href="/my_profile">My Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Educational Resources</h1>
+        <div class="resources-row">
+            <div class="resource">
+                <h3><a href="https://youtu.be/UkzVLHeSf7c?si=ly6NKb29_Faac-s_" target="_blank">Getting Started with Canva</a></h3>
+                <p>A beginner's guide to navigating and using Canva's features by Natalia Kalinska.</p>
+                <img src="../static/resource1.jpg" alt="Color Contrast Example"> <!-- Replace with actual image -->
+            </div>
+            <div class="resource">
+                <h3><a href="https://help.illinoisstate.edu/accessibility/website-and-digital/accessibility-tips-for-canva" target="_blank">Creating Accessible Designs in Canva</a></h3>
+                <p>Tips for designing with accessibility in mind using Canva by Illinois State University.</p>
+                <img src="../static/image.png" alt="Accessible Design Tips">
+            </div>
+            <div class="resource">
+                <h3><a href="https://www.canva.com/learn/choose-right-colors-brand/" target="_blank">Brand Color Selection</a></h3>
+                <p>A guide on how to choose your brand colors by Canva.</p>
+                <img src="../static/resource3.png" alt="Web Accessibility Tips"> <!-- Replace with actual image -->
+            </div>
+            <div class="resource">
+                <h3><a href="https://youtu.be/T6kVuMlJdIM?si=lFAde71lXGiTRFLL" target="_blank">Designing Infographics In Canva.</a></h3>
+                <p>A tutorial on creating visually appealing and informative infographics by Doodle Legend.</p>
+                <img src="../static/T6kVuMlJdIM-HD.jpg" alt="Infographic Example">
+            </div>
+            <div class="resource">
+                <h3><a href="https://theaccessibilityguy.com/canva-pdfs-are-not-accessible/" target="_blank">Exporting Accessible PDFs from Canva</a></h3>
+                <p>Step-by-step instructions for exporting designs as accessible PDFs by The Accessibility Guy.</p>
+                <img src="../static/Screenshot 2024-08-11 141611.png" alt="A11Y Project"> <!-- Replace with actual image -->
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 20px;">We are working to add more resources.</p>
+    </div>
+</body>
+</html>

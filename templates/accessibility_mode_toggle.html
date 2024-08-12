@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Mode</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url('path/to/your/background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0; /* Added margin for spacing between buttons */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 20;
+            width: 250px;
+        }
+
+        .menu:hover + .menu-content,
+        .menu-content:hover {
+            display: block;
+        }
+
+        .menu-content a {
+            display: block;
+            padding: 10px 40px;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu-content a:hover {
+            background-color: whitesmoke;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+
+        .font-size-controls {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .spacing {
+            margin: 30px 0; /* Extra space specifically for A+ and A- buttons */
+        }
+
+        /* Color blind mode styles */
+        .color-blind-mode {
+            filter: grayscale(100%) contrast(100%); /* Example filter for color blindness */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+
+        <!-- display the logo - minh -->
+
+        <div class="logo" onclick="location.href='./landing.html'">
+            <img src="/static/logo.png" alt="AdaptiveStudio Logo" style="height: 50px; cursor: pointer;">
+        </div>
+              
+        <div class="menu" id="menu" aria-haspopup="true" aria-expanded="false" aria-label="Toggle menu">☰</div>
+        <div class="menu-content" id="menuContent" aria-labelledby="menu" role="menu">
+            <a href="/real_time_accesiblity_checker" role="menuitem">Real Time Accessibility Checker</a>
+            <a href="/design_element_suggestions" role="menuitem">Design Element Suggestions</a>
+            <a href="/educational_resources" role="menuitem">Educational Resources</a>
+            <a href="/my_profile" role="menuitem">My Profile</a>
+            <a href="/logout" role="menuitem">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Accessibility Mode</h1>
+        <p>Toggle accessibility features for a better experience.</p>
+        
+        <!-- Font Size Controls -->
+        <div class="font-size-controls">
+            <button onclick="changeFontSize('increase')" aria-label="Increase font size">A+</button>
+            <div class="spacing"></div> <!-- Extra space between A+ and A- -->
+            <button onclick="changeFontSize('decrease')" aria-label="Decrease font size">A-</button>
+        </div>
+        
+        <button id="accessibilityButton" onclick="toggleAccessibility()" aria-label="Toggle accessibility mode">Enable Accessibility Mode</button>
+        
+        <!-- Color Blind Mode Toggle -->
+        <button id="colorBlindButton" onclick="toggleColorBlindMode()" aria-label="Toggle Color Blind Mode">Enable Color Blind Mode</button>
+        
+        <!-- Speaker Buttons -->
+        <button id="speakerButton" onclick="speakInstructions()" aria-label="Listen to instructions">🔊 Listen to Instructions</button>
+        <button id="stopButton" onclick="stopInstructions()" aria-label="Stop listening">✖ Stop Instructions</button>
+    </div>
+
+    <script>
+        const menu = document.getElementById('menu');
+        const menuContent = document.getElementById('menuContent');
+        const accessibilityButton = document.getElementById('accessibilityButton');
+        const toggleAccessibilityButton = document.getElementById('toggleAccessibilityButton');
+        const speakerButton = document.getElementById('speakerButton');
+        const stopButton = document.getElementById('stopButton');
+        const colorBlindButton = document.getElementById('colorBlindButton');
+
+        let isAccessibilityModeEnabled = false; 
+        let isColorBlindModeEnabled = false; // New variable for color blind mode
+        let currentFontSize = 16; 
+        let utterance; // Variable to store the speech utterance
+
+        menu.addEventListener('click', () => {
+            const isExpanded = menu.getAttribute('aria-expanded') === 'true';
+            menu.setAttribute('aria-expanded', !isExpanded);
+            menuContent.style.display = isExpanded ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target) && !menuContent.contains(event.target)) {
+                menuContent.style.display = 'none';
+                menu.setAttribute('aria-expanded', 'false'); 
+            }
+        });
+
+        toggleAccessibilityButton.addEventListener('click', toggleAccessibility);
+        colorBlindButton.addEventListener('click', toggleColorBlindMode); // Add event listener for color blind toggle
+
+        function toggleAccessibility() {
+            isAccessibilityModeEnabled = !isAccessibilityModeEnabled; 
+            if (isAccessibilityModeEnabled) {
+                document.body.classList.add('accessibility-mode');
+                alert("Accessibility mode enabled!");
+                accessibilityButton.textContent = "Disable Accessibility Mode"; 
+                toggleAccessibilityButton.textContent = "Disable Accessibility Mode"; 
+                saveUserPreferences(); 
+            } else {
+                document.body.classList.remove('accessibility-mode');
+                alert("Accessibility mode disabled!");
+                accessibilityButton.textContent = "Enable Accessibility Mode"; 
+                toggleAccessibilityButton.textContent = "Enable Accessibility Mode"; 
+                saveUserPreferences(); 
+            }
+        }
+
+        function toggleColorBlindMode() {
+            isColorBlindModeEnabled = !isColorBlindModeEnabled; 
+            if (isColorBlindModeEnabled) {
+                document.body.classList.add('color-blind-mode');
+                alert("Color Blind mode enabled!");
+                colorBlindButton.textContent = "Disable Color Blind Mode"; 
+                saveUserPreferences(); 
+            } else {
+                document.body.classList.remove('color-blind-mode');
+                alert("Color Blind mode disabled!");
+                colorBlindButton.textContent = "Enable Color Blind Mode"; 
+                saveUserPreferences(); 
+            }
+        }
+
+        function speakInstructions() {
+            const instructions = `
+                Welcome to AdaptiveStudio. You can enable accessibility mode by pressing A.
+                Adjust font sizes using the A+ button to increase size and A- to decrease size.
+                You can listen to these instructions by pressing I.
+                Press E to navigate to the Emotion Color Palette page, 
+                H for the Homepage, 
+                L to log out, 
+                C for the Real-Time Accessibility Checker page, 
+                D for Design Element Suggestions, 
+                and R for Educational Resources.
+            `;
+            utterance = new SpeechSynthesisUtterance(instructions);
+            utterance.rate = 0.7; // Slower speech rate
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function stopInstructions() {
+            window.speechSynthesis.cancel(); // Stop any ongoing speech
+        }
+
+        function changeFontSize(action) {
+            const body = document.body;
+            if (action === 'increase' && currentFontSize < 24) {
+                currentFontSize += 2; 
+            } else if (action === 'decrease' && currentFontSize > 12) {
+                currentFontSize -= 2; 
+            }
+            body.style.fontSize = currentFontSize + 'px'; 
+            saveUserPreferences(); 
+        }
+
+        function saveUserPreferences() {
+            localStorage.setItem('isAccessibilityModeEnabled', isAccessibilityModeEnabled);
+            localStorage.setItem('isColorBlindModeEnabled', isColorBlindModeEnabled); // Save color blind preference
+            localStorage.setItem('fontSize', currentFontSize);
+        }
+
+        function loadUserPreferences() {
+            const isEnabled = localStorage.getItem('isAccessibilityModeEnabled') === 'true';
+            const isColorBlindEnabled = localStorage.getItem('isColorBlindModeEnabled') === 'true'; // Load color blind preference
+            const fontSize = parseInt(localStorage.getItem('fontSize'), 10);
+
+            if (isEnabled) {
+                isAccessibilityModeEnabled = true;
+                document.body.classList.add('accessibility-mode');
+                accessibilityButton.textContent = "Disable Accessibility Mode";
+                toggleAccessibilityButton.textContent = "Disable Accessibility Mode";
+            }
+
+            if (isColorBlindEnabled) {
+                isColorBlindModeEnabled = true;
+                document.body.classList.add('color-blind-mode');
+                colorBlindButton.textContent = "Disable Color Blind Mode"; // Update button text
+            }
+
+            if (fontSize) {
+                currentFontSize = fontSize;
+                document.body.style.fontSize = currentFontSize + 'px';
+            }
+        }
+
+        window.onload = loadUserPreferences;
+
+        document.querySelectorAll('button').forEach(button => {
+            button.setAttribute('tabindex', '0'); 
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'a':
+                case 'A':
+                    toggleAccessibility();
+                    break;
+                case 'i':
+                case 'I':
+                    speakInstructions();
+                    break;
+                case 'ArrowUp':
+                    changeFontSize('increase');
+                    break;
+                case 'ArrowDown':
+                    changeFontSize('decrease');
+                    break;
+                case 'e':
+                case 'E':
+                    window.location.href = '/emotion_palette_selector'; // Navigate to emotion color palette page
+                    break;
+                case 'h':
+                case 'H':
+                    window.location.href = '/'; // Navigate to homepage
+                    break;
+                case 'l':
+                case 'L':
+                    window.location.href = '/logout'; // Navigate to logout
+                    break;
+                case 'c':
+                case 'C':
+                    window.location.href = '/real_time_accesiblity_checker'; // Navigate to real-time accessibility checker page
+                    break;
+                case 'd':
+                case 'D':
+                    window.location.href = '/design_element_suggestions'; // Navigate to design element suggestions page
+                    break;
+                case 'r':
+                case 'R':
+                    window.location.href = '/educational_resources'; // Navigate to educational resources page
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

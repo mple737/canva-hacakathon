@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560);  /* gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 400px; /* Adjusted for a narrower form */
+            background: #fff;
+            border-radius: 10px; /* Rounded corners */
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em; /* Increased font size */
+            margin: 0;
+            color: #2d5091; 
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #e87254;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #feb47b;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+        a {
+            color: #d61c1c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #ff9d52;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="{{ url_for('signup_user') }}" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+    
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
