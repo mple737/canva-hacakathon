@@ -15,7 +15,7 @@ CANVA_API_KEY = os.getenv('CANVA_API_KEY')
 @app.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('index.html')
+        return render_template('index.html', auth='user_id' in session)
     return redirect(url_for('landing'))
 
 @app.route('/landing')
@@ -34,10 +34,10 @@ def signup():
         return signup_user()
     return render_template('signup.html')
 
-@app.route('/my_profile')
-def my_profile():
+@app.route('/profile')
+def profile():
     if 'user_id' in session:
-        return render_template('my_profile.html')
+        return render_template('profile.html')
     return redirect(url_for('landing'))
 
 @app.route('/educational_resources')
@@ -56,9 +56,9 @@ def accessibility_mode_toggle():
 def emotion_palette():
     return render_template('emotion_palette_selector.html')
 
-@app.route('/real_time_accessibility_checker')
+@app.route('/accessibility')
 def real_time_accessibility_checker():
-    return render_template('real_time_accessibility_checker.html')
+    return render_template('accessibility.html')
 
 @app.route('/design_element_suggestions', methods=['GET', 'POST'])
 def design_element_suggestions():
