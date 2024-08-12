@@ -18,11 +18,7 @@
       header {
         width: 100%;
         padding: 20px;
-        background: linear-gradient(
-          to right,
-          #ca5247,
-          #c05a66
-        ); /* Red gradient */
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
         color: white;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
@@ -222,44 +218,6 @@
     </div>
 
     <div class="container">
-<<<<<<< HEAD
-        <div class="features-container" id="featuresContainer">
-            <div class="feature" id="feature1"onclick="promptLogin()" >
-                <img src="../static/emotionpalette.jpeg" alt="Emotion Palette Selector">
-                <div class="feature-content">
-                    <h2>Emotion Palette Selector</h2>
-                    <p>Discover how your design resonates with different emotions by using our Emotion Palette Selector tool.</p>
-                </div>
-            </div>
-            <div class="feature" id="feature2" onclick="promptLogin()">
-                <img src="../static/realtimechecker.jpeg" alt="Real-Time Accessibility Checker">
-                <div class="feature-content">
-                    <h2>Real-Time Accessibility Checker</h2>
-                    <p>Ensure your designs are accessible to everyone by using our real-time accessibility checker.</p>
-                </div>
-            </div>
-            <div class="feature" id="feature3" onclick="promptLogin()">
-                <img src="../static/design.webp" alt="Design Element Suggestions">
-                <div class="feature-content">
-                    <h2>Design Element Suggestions</h2>
-                    <p>Get instant suggestions for design elements that enhance creativity and usability.</p>
-                </div>
-            </div>
-            <div class="feature" id="feature7" onclick="promptLogin()">
-                <img src="../static/education.jpeg" alt="Educational Resources">
-                <div class="feature-content">
-                    <h2>Educational Resources</h2>
-                    <p>Access a rich library of educational resources to improve your design skills and knowledge.</p>
-                </div>
-            </div>
-            <div class="feature" id="feature8" onclick="promptLogin()">
-                <img src="../static/accessibility.jpeg" alt="Accessibility Mode Toggle">
-                <div class="feature-content">
-                    <h2>Accessibility Mode Toggle</h2>
-                    <p>Easily switch your design between standard and accessibility modes to see the impact on usability.</p>
-                </div>
-            </div>
-=======
       <div class="features-container" id="featuresContainer">
         <div
           class="feature"
@@ -277,7 +235,6 @@
               using our Emotion Palette Selector tool.
             </p>
           </div>
->>>>>>> 782b36a3e2db738c188981b29577dd454f02aeb3
         </div>
         <div class="feature" id="feature2" onclick="promptLogin()">
           <img
@@ -338,38 +295,11 @@
     </div>
 
     <script>
-<<<<<<< HEAD
-        const menu = document.getElementById('menu');
-        const menuContent = document.getElementById('menuContent');
-
-        
-        menu.addEventListener('click', () => {
-            menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
-        });
-
-
-        let currentIndex = 0;
-        const featuresContainer = document.getElementById('featuresContainer');
-        const dots = document.querySelectorAll('.dot');
-
-        function showSlide(index) {
-            if (index >= slides.length) index = 0;
-            if (index < 0) index = slides.length - 1;
-            slides.forEach((slide, i) => {
-                slide.style.transform = `translateX(-${index * 100}%)`;
-                dots[i].classList.toggle('active', i === index);
-            });
-            currentIndex = index;
-        }
-
-        function updateDots() {
-=======
       const featuresContainer = document.getElementById("featuresContainer");
       const dots = document.querySelectorAll(".dot");
       let currentIndex = 0;
 
       function updateDots() {
->>>>>>> 782b36a3e2db738c188981b29577dd454f02aeb3
         const featureWidth = featuresContainer.clientWidth;
         const scrollLeft = featuresContainer.scrollLeft;
         const newIndex = Math.round(scrollLeft / featureWidth);
@@ -396,14 +326,6 @@
             currentIndex * featuresContainer.clientWidth;
           updateDots();
         }
-<<<<<<< HEAD
-    }
-    function promptLogin() {
-        alert('Please log in to access this feature.');
-    }
-
-    setInterval(() => {
-=======
       }
 
       function promptLogin() {
@@ -412,16 +334,11 @@
 
       //setting the intervel duration to 10 seconds
       setInterval(() => {
->>>>>>> 782b36a3e2db738c188981b29577dd454f02aeb3
         currentIndex = (currentIndex + 1) % dots.length;
         featuresContainer.scrollLeft =
           currentIndex * featuresContainer.clientWidth;
         updateDots();
-<<<<<<< HEAD
-    }, 5000);
-=======
       }, 10000);
->>>>>>> 782b36a3e2db738c188981b29577dd454f02aeb3
 
       // Initialize dots
       updateDots();
@@ -439,11 +356,5 @@
       // Add scroll event listener to update dots
       featuresContainer.addEventListener("scroll", updateDots);
     </script>
-<<<<<<< HEAD
-
- 
-</body>
-=======
   </body>
->>>>>>> 782b36a3e2db738c188981b29577dd454f02aeb3
 </html>
