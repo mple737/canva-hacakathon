@@ -7,10 +7,26 @@
     <link rel="stylesheet" href="styles.css" />
     <style>
       body {
-        background-image: url("path/to/your/background.jpg"); /* Replace with your background image */
-        background-size: cover;
-        color: #333;
         font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        
+        background-size: cover;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
+      }
+
+      header {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        z-index: 10;
       }
       .container {
         max-width: 600px;
@@ -19,11 +35,26 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 200px;
+      
       }
+
       h1 {
-        text-align: center;
-        color: #007bff;
+        font-size: 2em; /* Increased font size */
+        margin: 0;
+        color: #2d5091; /* Dark blue for welcome text */
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        text-align: center; /* Center text horizontally */
+      } 
+
+      .container p {
+        margin: 0 0 15px;
+        color: #666;
+        text-align: center; /* Center text horizontally */
+        margin-top: 10px;
       }
+
       button {
         width: 100%;
         padding: 10px;
@@ -40,50 +71,87 @@
       }
       .menu {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 24px;
+        top: 30px;
+        right: 70px; /* Adjusted to move the button slightly to the left */
+        font-size: 18px; /* Increased font size */
+        background: #fff;
+        color: #e84c3d;
+        border: none;
+        font-weight: bold;
+        border-radius: 5px;
+        padding: 11px 18px;
         cursor: pointer;
-        color: black;
+        text-decoration: none;
+      }
+
+      .menu:hover {
+        background: #e84c3d;
+        color: #fff;
+        transform: scale(1.05);
       }
 
       .menu-content {
         display: none;
         position: absolute;
-        top: 40px;
-        right: 10px;
-        background: white;
+        top: 80px;
+        right: 70px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 20;
-        width: 250px;
-      }
-
-      .menu:hover + .menu-content,
-      .menu-content:hover {
-        display: block;
+        z-index: 30;
       }
 
       .menu-content a {
         display: block;
-        padding: 10px 40px;
-        color: black;
+        padding: 10px;
+        color: #323232;
         text-decoration: none;
-        border-bottom: 1px solid #ddd;
+        font-weight: normal;
       }
 
       .menu-content a:hover {
-        background-color: whitesmoke;
+        background: #f5f5f5;
       }
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        position: relative;
-        z-index: 10;
+      
+
+      .accessibilityButton,
+      .colorBlindButton,
+      .speakerButton,
+      .stopButton {
+        padding: 12px 24px;
+        font-size: 18px;
+        background: linear-gradient(
+          to right,
+          #007bff,
+          #0056b3
+        ); /* Gradient blue */
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: 0.3s, transform 0.3s;
       }
+      .accessibilityButton:hover,
+      .colorBlindButton:hover,
+      .speakerButton:hover,
+      .stopButton:hover  {
+        background: linear-gradient(
+          to right,
+          #0056b3,
+          #007bff
+        ); /* Inverted gradient on hover */
+        transform: scale(1.05);
+      }
+      .accessibilityButton:active,
+      .colorBlindButton:active,
+      .speakerButton:active,
+      .stopButton:active {
+        background: #003d7a;
+      }
+
 
       .font-size-controls {
         display: flex;
@@ -92,78 +160,71 @@
       }
 
       .spacing {
-        margin: 30px 0; /* Extra space specifically for A+ and A- buttons */
+        margin: 0 10px; /* Horizontal spacing between A+ and A- buttons */
       }
+
 
       /* Color blind mode styles */
       .color-blind-mode {
         filter: grayscale(100%) contrast(100%); /* Example filter for color blindness */
       }
+
+
     </style>
   </head>
   <body>
-    <div class="header">
-      <!-- display the logo - minh -->
-
+    <header>
+      <!-- Display the logo -->
       <div class="logo" onclick="location.href='./landing'">
         <img
           src="/static/logo.png"
           alt="AdaptiveStudio Logo"
-          style="height: 50px; cursor: pointer"
+          style="height: 65px; cursor: pointer"
         />
       </div>
 
-      <div
-        class="menu"
-        id="menu"
-        aria-haspopup="true"
-        aria-expanded="false"
-        aria-label="Toggle menu"
-      >
-        ☰
+      <div class="menu" id="menu">☰</div>
+      <div class="menu-content" id="menuContent">
+        <a href="./profile">My Profile</a>
+        <a href="./emotion_palette_selector">Emotion Palette Selector</a>
+        <a href="./accessibility">Real-Time Accessibility Checker</a>
+        <a href="./design_element_suggestions">Design Element Suggestions</a>
+        <a href="./educational_resources">Educational Resources</a>
+        <a href="./accessibility_mode_toggle">Accessibility Mode Toggle</a>
+        <a href="./landing">Logout</a>
       </div>
-      <div
-        class="menu-content"
-        id="menuContent"
-        aria-labelledby="menu"
-        role="menu"
-      >
-        <a href="/real_time_accesiblity_checker" role="menuitem"
-          >Real Time Accessibility Checker</a
-        >
-        <a href="/design_element_suggestions" role="menuitem"
-          >Design Element Suggestions</a
-        >
-        <a href="/educational_resources" role="menuitem"
-          >Educational Resources</a
-        >
-        <a href="/profile" role="menuitem">My Profile</a>
-        <a href="/logout" role="menuitem">Logout</a>
-      </div>
-    </div>
+    </header>
+
     <div class="container">
       <h1>Accessibility Mode</h1>
       <p>Toggle accessibility features for a better experience.</p>
 
       <!-- Font Size Controls -->
       <div class="font-size-controls">
+
         <button
+        class="accessibilityButton"
+        onclick="changeFontSize('decrease')"
+        aria-label="Decrease font size"
+      >
+        A-
+      </button>
+
+      <div class="spacing"></div>
+       
+
+      <button
+          class="accessibilityButton"
           onclick="changeFontSize('increase')"
           aria-label="Increase font size"
         >
           A+
-        </button>
-        <div class="spacing"></div>
-        <!-- Extra space between A+ and A- -->
-        <button
-          onclick="changeFontSize('decrease')"
-          aria-label="Decrease font size"
-        >
-          A-
-        </button>
+      </button>
+        
       </div>
 
       <button
+        class="accessibilityButton"
         id="accessibilityButton"
         onclick="toggleAccessibility()"
         aria-label="Toggle accessibility mode"
@@ -171,8 +232,8 @@
         Enable Accessibility Mode
       </button>
 
-      <!-- Color Blind Mode Toggle -->
       <button
+        class="colorBlindButton"
         id="colorBlindButton"
         onclick="toggleColorBlindMode()"
         aria-label="Toggle Color Blind Mode"
@@ -180,8 +241,8 @@
         Enable Color Blind Mode
       </button>
 
-      <!-- Speaker Buttons -->
       <button
+        class="speakerButton"
         id="speakerButton"
         onclick="speakInstructions()"
         aria-label="Listen to instructions"
@@ -189,6 +250,7 @@
         🔊 Listen to Instructions
       </button>
       <button
+        class="stopButton"
         id="stopButton"
         onclick="stopInstructions()"
         aria-label="Stop listening"
@@ -196,6 +258,7 @@
         ✖ Stop Instructions
       </button>
     </div>
+   
 
     <script>
       const menu = document.getElementById("menu");

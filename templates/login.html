@@ -21,6 +21,26 @@
         align-items: center;
         height: 100vh;
       }
+
+      
+      .logo img{
+            margin-left: 20px;
+      }
+
+      header {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        z-index: 10;
+      }
+
       .container {
         display: flex;
         justify-content: center;
@@ -80,6 +100,21 @@
       }
     </style>
   </head>
+
+
+  <header>
+    <!-- Display the logo - minh -->
+    <div class="logo" onclick="location.href='./landing'">
+      <img
+        src="/static/logo.png"
+        alt="AdaptiveStudio Logo"
+        style="height: 65px; cursor: pointer"
+      />
+    </div>
+
+  </header>
+
+
   <body>
     <div class="container">
       <form action="/login" method="POST">

@@ -9,19 +9,15 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background: url("/images/background.jpg") no-repeat center center fixed;
+    
         background-size: cover;
-        color: #fff;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
       }
 
       header {
         width: 100%;
         padding: 20px;
-        background: linear-gradient(
-          to right,
-          #ca5247,
-          #c05a66
-        ); /* Red gradient */
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
         color: white;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
@@ -83,15 +79,19 @@
 
       .welcome {
         text-align: center; /* Center the welcome text */
-        margin-top: 150px; /* Space above the welcome text */
+        margin-top: 100px; /* Space above the welcome text */
+        padding: 0%;
       }
 
       .welcome h1 {
-        font-size: 2.5em; /* Increased font size */
-        margin: 0;
-        color: #1e3c72; /* Dark blue for welcome text */
-        font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      
+            font-size: 2.5em;/* Increased font size */
+            margin: 0;
+            margin-bottom: 40px;
+            color: #0a337f; /* Dark blue for welcome text */
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        
       }
 
       .input-container {
@@ -113,6 +113,8 @@
         border-color: #0056b3; /* Darker blue on focus */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
       }
+
+
       .check-button {
         padding: 12px 24px;
         font-size: 18px;
@@ -158,26 +160,31 @@
 
       <div class="menu" id="menu">☰</div>
       <div class="menu-content" id="menuContent">
-        <!-- the dot infront of the file bc it explicity tells the browser to 
+        <!-- The dot infront of the file bc it explicity tells the browser to 
             look for the file in the same directory-->
 
+        <a href="./profile">My Profile</a>
         <a href="./emotion_palette_selector">Emotion Palette Selector</a>
+        <a href="./accessibility">Real-Time Accessibility Checker</a>
         <a href="./design_element_suggestions">Design Element Suggestions</a>
         <a href="./educational_resources">Educational Resources</a>
         <a href="./accessibility_mode_toggle">Accessibility Mode Toggle</a>
-        <a href="./profile">My Profile</a>
         <a href="./landing">Logout</a>
       </div>
     </header>
 
-    <div class="welcome">
-      <h1>Real Time Accessibility Checker</h1>
-    </div>
+  
 
     <div class="container">
+
+      <div class="welcome">
+        <h1>Real Time Accessibility Checker</h1>
+      </div>
+
       <div class="input-container">
         <input type="text" id="url" placeholder="Enter URL to check" />
       </div>
+
       <button class="check-button" onclick="checkAccessibility()">
         Check Accessibility
       </button>
@@ -231,3 +238,6 @@
     </script>
   </body>
 </html>
+
+
+

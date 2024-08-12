@@ -10,73 +10,149 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background: url("/images/background.jpg") no-repeat center center fixed;
         background-size: cover;
-        color: #fff;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
       }
-      .header {
+
+      header {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 20px;
-        position: relative;
+        position: fixed;
+        top: 0;
         z-index: 10;
       }
 
-      .logo span {
-        font-size: 24px;
-        color: black;
-        cursor: pointer;
-      }
 
       .menu {
         position: absolute;
-        top: 10px;
-        right: 60px;
-        font-size: 24px;
+        top: 30px;
+        right: 70px; /* Adjusted to move the button slightly to the left */
+        font-size: 18px; /* Increased font size */
+        background: #fff;
+        color: #e84c3d;
+        border: none;
+        font-weight: bold;
+        border-radius: 5px;
+        padding: 11px 18px;
         cursor: pointer;
-        color: black;
+        text-decoration: none;
       }
+
+      .menu:hover {
+        background: #e84c3d;
+        color: #fff;
+        transform: scale(1.05);
+      }
+
       .menu-content {
         display: none;
         position: absolute;
-        top: 40px;
-        right: 10px;
-        background: rgba(255, 255, 255, 0.8);
+        top: 80px;
+        right: 70px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 20;
-        width: 250px;
+        z-index: 30;
       }
-      .menu:hover + .menu-content,
-      .menu-content:hover {
-        display: block;
-      }
+
       .menu-content a {
         display: block;
-        padding: 10px 20px;
-        color: black;
+        padding: 10px;
+        color: #323232;
         text-decoration: none;
-        border-bottom: 1px solid #ddd;
+        font-weight: normal;
       }
+
       .menu-content a:hover {
-        background-color: #f4f4f4;
+        background: #f5f5f5;
       }
+
+      
       .container {
-        padding: 20px;
+        padding: 80px 20px 20px; /* Added padding-top to account for fixed header */
         text-align: center;
       }
+
+
+      .welcome {
+        text-align: center; /* Center the welcome text */
+        margin-top: 100px; /* Space above the welcome text */
+        padding: 0%;
+      }
+
+      .welcome h1 {
+      
+            font-size: 2.5em;/* Increased font size */
+            margin: 0;
+            margin-bottom: 40px;
+            color: #0a337f; /* Dark blue for welcome text */
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        
+      }
+
+      .input-container {
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+      .input-container input[type="text"] {
+        width: 100%;
+        max-width: 600px;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid #007bff; /* Blue shade */
+        border-radius: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      .input-container input[type="text"]:focus {
+        border-color: #0056b3; /* Darker blue on focus */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
       .generate-button,
       .download-button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #007bff; /* Blue shade */
+        padding: 12px 24px;
+        font-size: 18px;
+        background: linear-gradient(
+          to right,
+          #007bff,
+          #0056b3
+        ); /* Gradient blue */
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         cursor: pointer;
         margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: 0.3s, transform 0.3s;
       }
+      .generate-button:hover,
+      .download-button:hover {
+
+        background: linear-gradient(
+          to right,
+          #0056b3,
+          #007bff
+        ); /* Inverted gradient on hover */
+        transform: scale(1.05);
+
+      }
+
+      .generate-button:active,
+      .download-button:active {
+        background: #003d7a;
+
+      }
+
+
       .suggestions-container {
         margin-top: 20px;
         display: flex;
@@ -92,47 +168,60 @@
         height: 100px;
         object-fit: cover;
       }
-      .title {
-        font-size: 24px;
-        color: black;
-        text-align: center;
-        width: 100%;
-        padding: 10px;
-      }
+  
     </style>
   </head>
   <body>
-    <div class="header">
+    <header>
       <!-- Display the logo - minh -->
       <div class="logo" onclick="location.href='./landing'">
         <img
           src="/static/logo.png"
           alt="AdaptiveStudio Logo"
-          style="height: 50px; cursor: pointer"
+          style="height: 65px; cursor: pointer"
         />
       </div>
 
       <div class="menu" id="menu">☰</div>
       <div class="menu-content" id="menuContent">
-        <a href="/accessibility">Real Time Accessibility Checker</a>
-        <a href="/educational_resources">Educational Resources</a>
-        <a href="/accessibility_mode_toggle">Accessibility Mode Toggle</a>
-        <a href="/profile">My Profile</a>
-        <a href="/logout">Logout</a>
+        <!-- The dot infront of the file bc it explicity tells the browser to 
+            look for the file in the same directory-->
+
+        <a href="./profile">My Profile</a>
+        <a href="./emotion_palette_selector">Emotion Palette Selector</a>
+        <a href="./accessibility">Real-Time Accessibility Checker</a>
+        <a href="./design_element_suggestions">Design Element Suggestions</a>
+        <a href="./educational_resources">Educational Resources</a>
+        <a href="./accessibility_mode_toggle">Accessibility Mode Toggle</a>
+        <a href="./landing">Logout</a>
       </div>
-    </div>
+    </header>
+
+
     <div class="container">
-      <h1 class="title">Design Element Suggestions</h1>
-      <input
-        type="text"
-        id="prompt"
-        placeholder="What are you designing?"
-        style="width: 300px; padding: 10px"
-      />
-      <button class="generate-button" onclick="getDesignElements()">
-        Generate Suggestions
+
+        
+      <div class="welcome">
+        <h1>Design Element Suggestions</h1>
+      </div>
+
+      <div class="input-container">
+        <input type="text" id="url" placeholder="What are you designing?" />
+      </div>
+
+      <button
+      class="generate-button"
+      id="generate-button"
+      onclick="getDesignElements()"
+      >
+        Generate Palette
       </button>
+      
+      <div class="palette-container" id="palette-container"></div>
+
+
       <div class="suggestions-container" id="suggestions-container"></div>
+
       <button
         class="download-button"
         id="download-button"
@@ -141,7 +230,8 @@
       >
         Download Suggestions
       </button>
-    </div>
+</div>
+
     <script>
       let suggestions = [];
 

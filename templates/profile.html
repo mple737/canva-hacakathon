@@ -20,10 +20,11 @@
         .logo img{
             margin-left: 20px;
         }
+
         header {
             width: 100%;
             padding: 20px;
-            background: linear-gradient(to right, #ca5247, #c05a66); /* Red gradient */
+            background: linear-gradient(to right, #a64d45, #cb7a6f, #b55560); /* Gradient background */
             color: white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: flex;
@@ -36,18 +37,34 @@
 
         .container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 400px; /* Adjusted for a narrower form */
+            max-width: 500px; /* Adjusted for a wider form */
             background: #fff;
             border-radius: 10px; /* Rounded corners */
             padding: 40px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
+            position: relative; /* Allow positioning of child elements */
             margin-top: 100px;
         }
-       .menu {
+
+        .profile-picture-container {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+        }
+
+        .profile-picture-container img {
+            border-radius: 50%;
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            object-fit: cover;
+            border: 2px solid #ddd; /* Optional border */
+        }
+
+        .menu {
             position: absolute;
             top: 30px;
             right: 50px; /* Adjusted to move the button slightly to the left */
@@ -72,7 +89,7 @@
             display: none;
             position: absolute;
             top: 80px;
-            right: 70px;
+            right: 50px;
             background: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 5px;
@@ -94,10 +111,13 @@
         h1 {
             font-size: 2em; /* Increased font size */
             margin: 0;
+            margin-bottom: 40px;
             color: #2d5091; /* Dark blue for welcome text */
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
+
+
         input, textarea {
             width: 100%;
             padding: 12px;
@@ -106,7 +126,6 @@
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
-            margin-top: 20px;
         }
         button {
             background-color: #e87254;
@@ -118,7 +137,6 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
         }
         button:hover {
             background-color: #feb47b;
@@ -133,6 +151,7 @@
             text-decoration: none;
             transition: color 0.3s ease;
         }
+        
         a:hover {
             color: #ff9d52;
         }
@@ -141,97 +160,112 @@
 <body>
 
     <header>
-
-         <!-- Display the logo - minh -->
+        <!-- display the logo -->
         <div class="logo" onclick="location.href='./landing'">
-            <img src="/static/logo.png" alt="AdaptiveStudio Logo" style="height: 65px;  cursor: pointer;">
+            <img src="/static/logo.png" alt="AdaptiveStudio Logo" style="height: 65px; cursor: pointer;">
         </div>
         <div class="menu" id="menu">☰</div>
         <div class="menu-content" id="menuContent">
-            
-            <!-- the dot infront of the file bc it explicity tells the browser to 
-            look for the file in the same directory-->
-        
-            <a href="./my_profile.html">My Profile</a>
-            <a href="./emotion_palette_selector.html">Emotion Palette Selector</a>
-            <a href="./accessibility.html">Real-Time Accessibility Checker</a>
-            <a href="./design_element_suggestions.html">Design Element Suggestions</a>
-            <a href="./educational_resources.html">Educational Resources</a>
-            <a href="./accessibility_mode_toggle.html">Accessibility Mode Toggle</a>
-            <a href="./landing.html">Logout</a>
-
+            <!-- Navigation links -->
+            <a href="./profile">My Profile</a>
+            <a href="./emotion_palette_selector">Emotion Palette Selector</a>
+            <a href="./accessibility">Real-Time Accessibility Checker</a>
+            <a href="./design_element_suggestions">Design Element Suggestions</a>
+            <a href="./educational_resources">Educational Resources</a>
+            <a href="./accessibility_mode_toggle">Accessibility Mode Toggle</a>
+            <a href="./landing">Logout</a>
         </div>
     </header>
 
     <div class="container">
+        <!-- Profile Form -->
+        <h1>My Profile</h1>
+        <div class="profile-picture-container">
+            <img id="profilePicture" src="/static/profile.jpg" alt="Profile Picture">
+        </div>
         <form id="profileForm">
-            <h1>My Profile</h1>
             <input type="text" id="username" placeholder="Username" required disabled>
             <input type="text" id="name" placeholder="Name" required disabled>
             <input type="email" id="email" placeholder="Email" required disabled>
             <input type="password" id="password" placeholder="Password" required disabled>
-            <input type ="bio" id="bio" placeholder="Bio" required disabled></textarea>
-            <button type="button" id="editButton">Edit profile</button>
+            <textarea id="bio" rows="4" placeholder="Bio" disabled></textarea>
+            <button type="button" id="editButton">Edit Profile</button>
         </form>
     </div>
-    
+
     <script>
         const menu = document.getElementById('menu');
         const menuContent = document.getElementById('menuContent');
         const editButton = document.getElementById('editButton');
-        const inputs = document.querySelectorAll('input, textarea');
+        const inputs = document.querySelectorAll('#profileForm input, #profileForm textarea');
+
+        // Function to toggle disabled state of form fields
+        function toggleEditMode() {
+            const isDisabled = inputs[0].disabled;
+            inputs.forEach(input => {
+                input.disabled = !isDisabled;
+            });
+            editButton.textContent = isDisabled ? 'Save Changes' : 'Edit Profile';
+        }
 
         // Fetch user data on page load
         window.onload = async () => {
-            const response = await fetch('/get_user_data');
-            const data = await response.json();
-
-            document.getElementById('username').value = data.username;
-            document.getElementById('name').value = data.name;
-            document.getElementById('email').value = data.email;
-            document.getElementById('bio').value = data.bio;
+            try {
+                const response = await fetch('/get_user_data');
+                const data = await response.json();
+                document.getElementById('username').value = data.username || '';
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('bio').value = data.bio || '';
+                document.getElementById('profilePicture').src = data.profilePicture || '/static/profile.png';
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
         };
 
+        // Toggle menu visibility
         menu.addEventListener('click', () => {
             menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
         });
 
+        // Hide menu when clicking outside
         document.addEventListener('click', (event) => {
             if (!menu.contains(event.target) && !menuContent.contains(event.target)) {
                 menuContent.style.display = 'none';
             }
         });
 
+        // Toggle edit/save profile
         editButton.addEventListener('click', async () => {
-            inputs.forEach(input => {
-                input.disabled = !input.disabled;
-            });
-            if (!inputs[0].disabled) {
-                // If editing is enabled, save the changes
+            const isDisabled = inputs[0].disabled;
+            toggleEditMode();
+
+            if (!isDisabled) {
                 const updatedData = {
                     username: document.getElementById('username').value,
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
                     password: document.getElementById('password').value,
-                    bio: document.getElementById('bio').value,
+                    bio: document.getElementById('bio').value
                 };
 
-                const response = await fetch('/save_user_data', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedData)
-                });
+                try {
+                    const response = await fetch('/update_user_data', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updatedData)
+                    });
 
-                const result = await response.json();
-                if (result.success) {
-                    alert('Profile updated successfully!');
-                } else {
-                    alert('Error updating profile: ' + result.error);
+                    if (!response.ok) {
+                        throw new Error('Failed to update user data');
+                    }
+
+                    alert('Profile updated successfully');
+                } catch (error) {
+                    console.error('Error updating user data:', error);
+                    alert('Failed to update profile');
                 }
             }
-            editButton.textContent = inputs[0].disabled ? 'Edit Profile' : 'Save Changes';
         });
     </script>
 </body>
