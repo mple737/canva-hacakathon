@@ -217,7 +217,7 @@
     
     <div class="container">
         <div class="features-container" id="featuresContainer">
-            <div class="feature" id="feature1" onclick="window.location.href='/emotion_palette_selector'">
+            <div class="feature" id="feature1"onclick="promptLogin()" >
                 <img src="../static/emotionpalette.jpeg" alt="Emotion Palette Selector">
                 <div class="feature-content">
                     <h2>Emotion Palette Selector</h2>
@@ -263,16 +263,32 @@
         <button class="arrow left" onclick="moveLeft()">&#9664;</button>
         <button class="arrow right" onclick="moveRight()">&#9654;</button>
     </div>
-    
 
-    
     <script>
+        const menu = document.getElementById('menu');
+        const menuContent = document.getElementById('menuContent');
 
-    const featuresContainer = document.getElementById('featuresContainer');
-    const dots = document.querySelectorAll('.dot');
-    let currentIndex = 0;
+        
+        menu.addEventListener('click', () => {
+            menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+        });
 
-    function updateDots() {
+
+        let currentIndex = 0;
+        const featuresContainer = document.getElementById('featuresContainer');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            if (index >= slides.length) index = 0;
+            if (index < 0) index = slides.length - 1;
+            slides.forEach((slide, i) => {
+                slide.style.transform = `translateX(-${index * 100}%)`;
+                dots[i].classList.toggle('active', i === index);
+            });
+            currentIndex = index;
+        }
+
+        function updateDots() {
         const featureWidth = featuresContainer.clientWidth;
         const scrollLeft = featuresContainer.scrollLeft;
         const newIndex = Math.round(scrollLeft / featureWidth);
@@ -298,17 +314,15 @@
             updateDots();
         }
     }
-
     function promptLogin() {
         alert('Please log in to access this feature.');
     }
- 
-    //setting the intervel duration to 10 seconds
+
     setInterval(() => {
         currentIndex = (currentIndex + 1) % dots.length;
         featuresContainer.scrollLeft = currentIndex * featuresContainer.clientWidth;
         updateDots();
-    }, 10000);
+    }, 5000);
 
     // Initialize dots
     updateDots();
@@ -326,5 +340,7 @@
     featuresContainer.addEventListener('scroll', updateDots);
 
     </script>
+
+ 
 </body>
 </html>
